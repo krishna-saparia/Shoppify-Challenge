@@ -1,14 +1,19 @@
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
-import ReactNotification from "react-notifications-component";
 import React, { useState, useEffect } from "react";
-import { AppHeader, HeaderTitle } from "./styles";
 
 function App() {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [nomineesList, setNomineesList] = useState([]);
+  const [removeNomineeList, setRemoveNomineeList] = useState(filteredData);
+
+  const handleRemove = (id) => {
+    const newList = removeNomineeList.filter((item) => item.id !== id);
+    setRemoveNomineeList(newList);
+    console.log("Item is called");
+  };
 
   useEffect(() => {
     console.log("Loading status", loading);
@@ -93,6 +98,15 @@ function App() {
                           <ul>
                             <ol key={Nomdata.imdbID}>
                               {Nomdata.Title}({Nomdata.Year})
+                              {/* <button
+                                className="button"
+                                disabled={removeNomineeList
+                                  .map((el) => el.imdbID)
+                                  .includes(Nomdata.imdbID)}
+                                onClick={() => handleRemove(Nomdata.imdbID)}
+                              >
+                                Remove
+                              </button> */}
                             </ol>
                           </ul>
                         </div>
@@ -109,15 +123,4 @@ function App() {
     </div>
   );
 }
-const styles = {
-  display: "inline",
-  width: "30%",
-  height: 50,
-  float: "left",
-  padding: 5,
-  border: "0.5px solid black",
-  marginBottom: 10,
-  marginRight: 10,
-};
-
 export default App;
